@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct FindDotApp: App {
+    @StateObject private var dotController = DotController()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            FindDotView(controller: dotController)
         }
     }
 }
