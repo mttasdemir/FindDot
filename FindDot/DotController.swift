@@ -10,10 +10,11 @@ import SwiftUI
 import Combine
 
 class DotController: ObservableObject {
-    let timerPublisher = Timer.publish(every: 2, tolerance: nil, on: RunLoop.main, in: RunLoop.Mode.common, options: nil)
+    let timerPublisher = Timer.publish(every: 1, tolerance: nil, on: RunLoop.main, in: RunLoop.Mode.common, options: nil)
     private var cancellable: AnyCancellable?
 
     @Published var dots: Array<Dot> = []
+    @Published var gameStatus: Status = .running
     @Published var dotsColor: RadialGradient = DotController.VisibleGradient
     static let VisibleGradient = RadialGradient(
                                         gradient   : Gradient(colors: [.yellow, .red]),
@@ -27,6 +28,7 @@ class DotController: ObservableObject {
                                         startRadius: 0.2,
                                         endRadius  : 200
                                     )
+    
     // MARK: - intents
     func generateNewDot(in size: CGSize) {
         for _ in 1...100 {
@@ -67,4 +69,17 @@ class DotController: ObservableObject {
                         }
     }
     
+    func gameOver() {
+        dots.removeAll()
+        gameStatus = .end
+    }
+    
+    func restartGame(_ size: CGSize) {
+        gameStatus = .running
+        generateNewDot(in: size)
+    }
+}
+
+enum Status {
+    case end, running
 }

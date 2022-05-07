@@ -24,7 +24,7 @@ struct Dot: Identifiable {
     
     init(inbound size: CGSize) {
         self.width = CGFloat.random(in: 20...150)
-        self.offset = CGPoint(x: CGFloat.random(in: 0...size.width - width), y: CGFloat.random(in: 0...size.height - width))
+        self.offset = CGPoint(x: CGFloat.random(in: 0...size.width - width), y: CGFloat.random(in: 20...size.height - width - 10))
     }
     
     func intersect(with dot: Dot) -> Bool {
