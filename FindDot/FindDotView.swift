@@ -26,6 +26,7 @@ struct FindDotView: View {
                         }
                     }
                 }.font(.title).foregroundColor(.accentColor)
+                
                 ForEach(controller.dots) { dot in
                     DotView(dot: dot, color: controller.dotsColor)
                         .onTapGesture {
@@ -39,15 +40,7 @@ struct FindDotView: View {
                         }
                 }
                 if controller.gameStatus == .end {
-                    VStack {
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            Text("GAME OVER").foregroundColor(.red).font(.system(size: 60))
-                            Spacer()
-                        }
-                        Spacer()
-                    }
+                    gameOver
                 }
             }
             .task {
@@ -56,22 +49,22 @@ struct FindDotView: View {
         }
         .edgesIgnoringSafeArea(.bottom)
     }
+    
+    var gameOver: some View {
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                Text("GAME OVER").foregroundColor(.red).font(.system(size: 60))
+                Spacer()
+            }
+            Spacer()
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         FindDotView(controller: DotController())
-    }
-}
-
-struct DotView: View {
-    let dot: Dot
-    let color: RadialGradient
-    
-    var body: some View {
-        Circle()
-            .fill(color)
-            .offset(x: dot.offset.x, y: dot.offset.y)
-            .frame(width: dot.width, height: dot.width, alignment: .center)
     }
 }
